@@ -4,7 +4,6 @@
   "description": "",
   "main": "dist/index.js",
   "bin": "dist/index.js",
-  "type": "module",
   "scripts": {
     "ts:dev": "ts-node src/index.ts",
     "tsc:dev": "node dist/index.js",
