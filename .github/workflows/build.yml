@@ -7,27 +7,33 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [22.x]
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: 1. Env, use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
     
-    - name: Install dependencies
+    - name: 2. Project
+      uses: actions/checkout@v4
+
+    - name: 3. Dependencies
       run: npm ci
       
-    - name: Build with tsc
+    - name: 4. Build with tsc
       run: npm run tsc:build
       
-    - name: Build with esbuild
+    - name: 4. Build with esbuild
       run: npm run esbuild:build
       
-    - name: Build with Vite
+    - name: 4. Build with Vite
       run: npm run vite:build
-      
-    - name: Build executable
-      run: |
-        npm run tsc:build
-        npm run pkg:build
+    
+    - name: 4. Build with SEA
+      run: npm run sea:build
+    
+    # 弃用，原版tsc不再维护
+    # - name: 4. Build executable
+    #   run: |
+    #     npm run tsc:build
+    #     npm run pkg:build

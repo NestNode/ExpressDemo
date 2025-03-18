@@ -6,6 +6,6 @@ build({
   bundle: true,
   platform: 'node',
   format: 'cjs',
-  target: 'node20',
+  target: 'node22',
   external: ['express'],
 }).catch(() => process.exit(1));
