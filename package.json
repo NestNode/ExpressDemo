@@ -3,13 +3,24 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "bin": "dist/index.js",
   "scripts": {
     "ts:dev": "ts-node src/index.ts",
+    "tsc:dev": "node dist/index.js",
+    "tsc:build": "tsc",
+
     "vite:dev": "vite",
     "vite:build": "vite build",
+
     "esbuild:dev": "esbuild --watch",
-    "esbuild:build": "node esbuild.config.ts",
-    "pkg:build": "pkg . --out-path dist",
+    "esbuild:build": "node esbuild.js",
+
+    "pkg:build_comment": "pkg . --out-path build",
+    "pkg:build": "npm run esbuild:build && pkg dist/esbuild/index.js --out-path dist/pkg --options max_old_space_size=4096",
+    "pkg:dev:win": "npm run esbuild:build && dist/pkg/express-ts-demo-win.exe",
+    "pkg:dev:linux": "npm run esbuild:build && dist/pkg/express-ts-demo-linux",
+    "pkg:dev:macos": "bnpm run esbuild:build && dist/pkg/express-ts-demo-macos",
+
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "LincZero",
@@ -28,6 +39,11 @@
   },
   "pkg": {
     "scripts": "dist/**/*.js",
-    "assets": "package.json"
+    "assets": "package.json",
+    "targets": [
+      "node14",
+      "node16",
+      "node18"
+    ]
   }
 }

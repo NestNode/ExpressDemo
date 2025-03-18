@@ -9,6 +9,6 @@ export default defineConfig({
       fileName: 'index',
       formats: ['cjs'],
     },
-    outDir: 'dist',
+    outDir: 'dist/vite/',
   },
 });
