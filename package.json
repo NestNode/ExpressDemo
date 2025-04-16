@@ -5,26 +5,26 @@
   "main": "dist/index.js",
   "bin": "dist/index.js",
   "scripts": {
-    "ts:dev": "ts-node src/index.ts",
-    "tsc:dev": "node dist/index.js",
+    "dev": "vite",
+    "build": "vite build",
+    "ts:dev": "tsc && ts-node src/index.ts",
+    "tsc:dev": "tsc && node dist/index.js",
     "tsc:build": "tsc",
-
-    "vite:dev": "vite",
+    "vite:dev": "vite --port 24052 --debug",
     "vite:build": "vite build",
-
     "esbuild:dev": "esbuild --watch",
     "esbuild:build": "node esbuild.js",
-
     "sea:build": "npm run tsc:build && node --experimental-sea-config sea-config.json",
-
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "LincZero",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.10",
     "esbuild": "^0.25.1",

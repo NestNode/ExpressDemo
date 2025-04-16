@@ -11,4 +11,7 @@ export default defineConfig({
     },
     outDir: 'dist/vite/',
   },
+  server: {
+    port: 24052
+  }
 });
