@@ -44,11 +44,14 @@ export default class API {
     // })
   }
 
-  // nodedata 的 Restful API
-  private nodedata: string|object = {}
+  /**
+   * 通用的 Restful API
+   * 对于 nodeflow 应用程序来说，id 恒为 `nodedata`
+   */
+  private restdata: {[key: string]: object} = {}
   registerAPI_nodedata() {
     const router = express.Router()
-    this.app.use('/nodedata', router)
+    this.app.use('/rest', router) // 这样的话，req.baseUrl == '/rest' && req.url == '<:id>'
 
     // 增
     router.post('/:id', (req, res) => {});
@@ -57,26 +60,36 @@ export default class API {
     router.delete('/:id', (req, res) => {})
 
     // 改
-    router.put('/', (req, res) => {
+    router.put('/:id', (req, res) => {
       if (!req.body || Object.keys(req.body).length === 0) {
         res.status(400).json({ error: 'Empty request body' })
         return
       }
 
-      console.log(`router put ----------------------\n    ${JSON.stringify(this.nodedata)} ->\n    ${JSON.stringify(req.body.data)}`)
-      this.nodedata = req.body.data
+      console.log(`router put ---------------------- #${req.url}\n    ${JSON.stringify(this.restdata[req.url])} ->\n    ${JSON.stringify(req.body.data)}`)
+      this.restdata[req.url] = req.body.data
       res.json({
         code: 0,
-        data:  this.nodedata
-      });
-    });
+        data:  this.restdata[req.url]
+      })
+    })
 
     // 查
-    router.get('/', (req, res) => {
-      res.json({
-        code: 0,
-        data:  this.nodedata
-      });
+    router.get('/:id', (req, res) => {
+      if (!this.restdata[req.url]) {
+        res.json({
+          code: -1,
+          data: {},
+          msg: 'without rest #' + req.url
+        })
+        return
+      } else {
+        res.json({
+          code: 0,
+          data:  this.restdata[req.url]
+        })
+        return
+      }
     })
 
     // router.get('/:id', (req, res) => {
