@@ -35,7 +35,8 @@ export default class API {
       });
     });
 
-    this.registerAPI_nodedata()
+    // 通用的RestAPI
+    this.registerAPI_rest()
 
     // 错误
     // this.app.use((err, req, res, next) => {
@@ -49,9 +50,9 @@ export default class API {
    * 对于 nodeflow 应用程序来说，id 恒为 `nodedata`
    */
   private restdata: {[key: string]: object} = {}
-  registerAPI_nodedata() {
+  registerAPI_rest() {
     const router = express.Router()
-    this.app.use('/rest', router) // 这样的话，req.baseUrl == '/rest' && req.url == '<:id>'
+    this.app.use('/rest', router) // 这样的话，req.baseUrl == '/rest' && req.url == '/<:id>'
 
     // 增
     router.post('/:id', (req, res) => {});
